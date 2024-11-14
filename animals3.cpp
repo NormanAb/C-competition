@@ -25,10 +25,7 @@ bool checkforIntersect(gyvunas a, gyvunas b) {
     if (a.startTotal < b.endTotal && b.startTotal < a.endTotal) { //finding the highest starting time and smallest ending time
         return true;
     }
-    //a.endTotal > b.startTotal || b.startTotal < a.endTotal
     else return false;
-
-    //kaip aprasyti intervala kaip viena objekta isduodama?
 }
 
 
