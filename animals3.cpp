@@ -4,9 +4,6 @@
 
 using namespace std;
 
-static int mini = 0;
-static int maxi = 0;
-
 
 struct gyvunas {
 
@@ -16,18 +13,19 @@ struct gyvunas {
     int endHour;
     int endMinute;
 
-    int startTotal =;
+    int startTotal;
 
     int endTotal;
 
 };
 
 bool checkforIntersect(gyvunas a, gyvunas b) {
-    cout << "startTotal: " << startTotal << endl;
-    cout << "endTotal: "
-    if (a.endTotal > b.startTotal || b.startTotal < b.endTotal) { //finding the highest starting time and smallest ending time
+    cout << "A startTotal: " << a.startTotal << " B start total " << b.startTotal << endl;
+    cout << "A endTotal: " << a.endTotal << " B end total " << b.endTotal << endl;
+    if (a.startTotal < b.endTotal && b.startTotal < a.endTotal) { //finding the highest starting time and smallest ending time
         return true;
     }
+    //a.endTotal > b.startTotal || b.startTotal < a.endTotal
     else return false;
 
     //kaip aprasyti intervala kaip viena objekta isduodama?
@@ -35,14 +33,15 @@ bool checkforIntersect(gyvunas a, gyvunas b) {
 
 
 int main() {
+    
+    int mini = 60 * 24;
+    int maxi = 0;
 
     int n;
     cout << "Irasykite n skaiciu: " << endl;
     cin >> n;
 
-    cout << mini << " " << maxi << endl;
-
-    bool found;
+    bool found = false;
 
     vector<gyvunas> gyvunai(n);
 
@@ -51,34 +50,33 @@ int main() {
         { //obtain data
             cout << "Irasykite gyvuno intervala: " << endl;
             cin >> gyvunai[i].startHour >> gyvunai[i].startMinute >> gyvunai[i].endHour >> gyvunai[i].endMinute;
+            
+            
             gyvunai[i].startTotal = gyvunai[i].startHour * 60 + gyvunai[i].startMinute;
             gyvunai[i].endTotal = gyvunai[i].endHour * 60 + gyvunai[i].endMinute;
 
             cout << "Gyvunas: " << gyvunai[i].startHour << " " << gyvunai[i].startMinute << " " << gyvunai[i].endHour << " " << gyvunai[i].endMinute << " " << endl;;
-            
-            
-            
-            if (i == 0) continue;
+
 
             //Check if there is an intersection
             //Holding value of current possible intersection
-            else if (checkforIntersect(gyvunai[i-1], gyvunai[i]) == true)
+            if ( i > 0 && checkforIntersect(gyvunai[i-1], gyvunai[i]) == true)
                 {
                     found = true;
-                    mini = min(gyvunai[i].endTotal, gyvunai[i-1].endTotal); //pabaiga
-                    maxi = max(gyvunai[i].startTotal, gyvunai[i-1].startTotal); //pradzia
-                }
-            else found = false;
-
+                    mini = min(mini, gyvunai[i].endTotal, gyvunai[i-1].endTotal); //pabaiga
+                    maxi = max(maxi, gyvunai[i].startTotal, gyvunai[i-1].startTotal); //pradzia
+                    
+                    cout << "Mini: " << mini << " Maxi: " << maxi << endl;
+            }
         }
     }
 
     else cout << "Nepalyginsi tik 1 gyvuno" << endl;
 
-    if (found == true)
+    if (found)
     {
         cout << "TAIP" << endl;
-        cout << maxi / 60 << " " << maxi % 60 << " " << mini / 60 << " " << maxi % 60;
+        cout << maxi / 60 << " " << maxi % 60 << " " << mini / 60 << " " << mini % 60;
     }
     else {
             cout << "NE" << endl;
@@ -89,5 +87,3 @@ int main() {
 
     return 0;
 }
-
-
