@@ -1,16 +1,19 @@
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 
-void sort (vector<int> array1, int n) {
-    for (int i=1; i < n; i++) {
-        if (array1[i] < array1[i-1]) {
-            int temp = array1[i];
-            array1[i] = array1[i-1];
-            array1[i-1] = temp;
-        }
+void sortBubble (vector<int>& array1, int n) { 
+    for (int i = 0; i < n; i++) {
+        for (int k = i+1; k < n; k++) {
+           if (array1[k] < array1[i]) {
+            int temp = array1[k];
+            array1[k] = array1[i];
+            array1[i] = temp;
+           }
+        } 
     }
     cout << "Sorted array: " << endl;
     for (int k=0; k < n; k++) {
@@ -22,21 +25,19 @@ void sort (vector<int> array1, int n) {
 
 
 int main() {
+    vector <int> array1;
     int n;
-    cin >> n;
-
-    vector <int> array1(n);
-
-    for (int i = 0; i < n; i++) {
-        cin >> array1[i];
+    int count=0;
+    
+    while (cin >> n) { //Input any number of values
+        array1.push_back(n);
+        count++;
     }
 
-    sort(array1, n);
 
+    if (count == 0) cout << "No numbers inputted" << endl;
 
-    //Make it more universal now:
-    while (n != NULL) {
+    else sortBubble(array1, count); //sorting the values
 
-    }
-
+    return 0;
 }
